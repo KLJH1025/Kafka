@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: kafkaTest
+
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+#      group-id: consumer_group01
+#      auto-offset-reset: earliest
+
+topic:
+  name1: email

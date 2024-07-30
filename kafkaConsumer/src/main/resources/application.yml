@@ -1,0 +1,12 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: kafkaTest
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: consumer_group01
+      auto-offset-reset: earliest
