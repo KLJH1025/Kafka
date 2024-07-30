@@ -4,9 +4,16 @@ server:
 spring:
   application:
     name: kafkaTest
+  config:
+    import: classpath:email.yml
 
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
       group-id: consumer_group01
       auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+firebase:
+  admin-json-path: firebase/chickenstock-noti-firebase-adminsdk-bogud-979a9f7227.json

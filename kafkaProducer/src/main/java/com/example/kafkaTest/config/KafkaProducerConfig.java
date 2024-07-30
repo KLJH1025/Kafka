@@ -1,5 +1,6 @@
 package com.example.kafkaTest.config;
 
+import com.example.kafkaTest.dto.NotificationMessageDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -8,38 +9,30 @@ import org.springframework.core.env.Environment;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    private final Environment env;
+    @Bean
+    public ProducerFactory<String, NotificationMessageDto> producerFactory() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                "127.0.0.1:9092");
+        config.put(
+                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+                StringSerializer.class);
+        config.put(
+                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+                JsonSerializer.class);
 
-    KafkaProducerConfig(Environment environment) {
-        this.env = environment;
-    }
-
-
-    public Map<String, Object> producerConfig() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                env.getProperty("spring.kafka.producer.bootstrap-servers"));
-
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
-                , StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
-                , StringSerializer.class);
-        return props;
-    }
-
-
-    public ProducerFactory<String, String> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(this.producerConfig());
+        return new DefaultKafkaProducerFactory<>(config);
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(this.producerFactory());
+    public KafkaTemplate<String, NotificationMessageDto> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 }

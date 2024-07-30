@@ -1,0 +1,17 @@
+spring:
+  config:
+    import: classpath:privacy.yml
+  mail:
+    host: ${mail.host}
+    port: ${mail.port}
+    username: ${mail.username}
+    password: ${mail.password}
+    protocol: ${mail.protocol}
+    properties:
+      mail:
+        debug: ${mail.debug}
+        smtp:
+          auth: ${mail.smtpauth}
+          timeout: ${mail.timeout}
+          starttls:
+            enable: ${mail.starttls}

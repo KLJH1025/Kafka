@@ -1,5 +1,6 @@
 package com.example.kafkaTest;
 
+import com.example.kafkaTest.dto.NotificationMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,14 +19,14 @@ public class KafkaProducerService {
 
     /* Kafka Template 을 이용해 Kafka Broker 전송 */
 
-    private final KafkaTemplate<String,String> kafkaTemplate;
+    private final KafkaTemplate<String, NotificationMessageDto> kafkaTemplate;
 
-    public void sendEmailMessageToKafka(String message) {
+    public void sendEmailMessageToKafka(NotificationMessageDto message) {
         System.out.printf("Producer Send Email Message : %s%n",message);
         this.kafkaTemplate.send("email",message);
     }
 
-    public void sendAlarmMessageToKafka(String message) {
+    public void sendAlarmMessageToKafka(NotificationMessageDto message) {
         System.out.printf("Producer Send Alarm Message : %s%n",message);
         this.kafkaTemplate.send("alarm",message);
     }
