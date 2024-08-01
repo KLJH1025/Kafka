@@ -20,7 +20,10 @@ public class KafkaProducerConfig {
     public ProducerFactory<String, NotificationMessageDto> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "127.0.0.1:9092");
+                "localhost:9202");
+
+        // "kafka-2:29202"
+        // "127.0.0.1:9092"
         config.put(
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);

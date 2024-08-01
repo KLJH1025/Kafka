@@ -13,12 +13,14 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @EnableKafka // 필수 어노테이션
 @Configuration
+@EnableAsync
 public class KafkaConsumerConfig {
 
     @Bean
@@ -26,7 +28,7 @@ public class KafkaConsumerConfig {
 
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "127.0.0.1:9092");
+                "localhost:9202");
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "consumer_group01");
         config.put(
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,

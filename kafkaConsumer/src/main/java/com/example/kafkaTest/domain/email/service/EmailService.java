@@ -3,9 +3,14 @@ package com.example.kafkaTest.domain.email.service;
 import com.example.kafkaTest.domain.email.EmailProperties;
 import com.example.kafkaTest.global.application.MessageSender;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Properties;
 
@@ -21,7 +26,6 @@ public class EmailService implements MessageSender {
         mailSender = new JavaMailSenderImpl();
         setMailSender();
     }
-
     private void setMailSender() {
         mailSender.setHost(emailProps.getHost());
         mailSender.setPort(emailProps.getPort());
@@ -36,9 +40,8 @@ public class EmailService implements MessageSender {
         properties.put("mail.debug", emailProps.getDebugEnable());
     }
 
-
-
     @Override
+    @Async
     public void sendMessage(String receiverAddress, String title, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@chickenstock.com");
